@@ -194,7 +194,11 @@ class RocmAttentionBackend(AttentionBackend):
         from vllm.config import get_current_vllm_config_or_none
 
         config = get_current_vllm_config_or_none()
-        if config is not None and config.model_config.is_hybrid:
+        if (
+            config is not None
+            and config.model_config is not None
+            and config.model_config.is_hybrid
+        ):
             return [MultipleOf(32)]
 
         return [MultipleOf(16)]
